@@ -1,18 +1,17 @@
 import React from 'react';
+import {Link} from "react-router-dom"
 import '../styles/Register.css';
+import {API_ROOT} from '../constants';
 
 import {
     Form,
     Input,
     Tooltip,
     Icon,
-    Cascader,
     Select,
-    Row,
-    Col,
-    Checkbox,
     Button,
     AutoComplete,
+    message
 } from 'antd';
 
 const { Option } = Select;
@@ -27,9 +26,29 @@ class RegistrationForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
+        let lastResponse;
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                fetch(`${API_ROOT}/signup`, {
+                    method:'POST',
+                    body: JSON.stringify({
+                        username: values.username,
+                        password: values.password,
+                    }),
+                }).then((response) => {
+                    lastResponse = response
+                    return response.text(); //return another promise
+                }, (error) => {
+                    console.log('Error');
+                }).then ((text) => {
+                    if (lastResponse.ok) {
+                        message.success(text);
+                        this.props.history.push('/login');
+                    } else {
+                        message.error(text);
+                    }
+                });
             }
         });
     };
@@ -87,6 +106,20 @@ class RegistrationForm extends React.Component {
 
         return (
             <Form {...formItemLayout} onSubmit={this.handleSubmit} className="register-form">
+                <Form.Item
+                    label={
+                        <span className="text-style">
+              Nickname&nbsp;
+                            <Tooltip title="What do you want others to call you?">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+            </span>
+                    }
+                >
+                    {getFieldDecorator('username', {
+                        rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+                    })(<Input />)}
+                </Form.Item>
                 <Form.Item label= {<span className="text-style">E-mail</span>}>
                     {getFieldDecorator('email', {
                         rules: [
@@ -127,24 +160,13 @@ class RegistrationForm extends React.Component {
                         ],
                     })(<Input.Password onBlur={this.handleConfirmBlur} />)}
                 </Form.Item>
-                <Form.Item
-                    label={
-                        <span className="text-style">
-              Nickname&nbsp;
-                            <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-                    }
-                >
-                    {getFieldDecorator('nickname', {
-                        rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-                    })(<Input />)}
-                </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button className="register-button" type="primary" htmlType="submit">
                         Register
                     </Button>
+                    <div>
+                        I already have an account, go back to <Link to="/login">Login</Link>
+                    </div>
                 </Form.Item>
             </Form>
         );
