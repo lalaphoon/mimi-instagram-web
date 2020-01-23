@@ -1,0 +1,19 @@
+.ant-form.register-form, .register-form  {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.text-style {
+    color: white;
+}
+
+.register-button {
+    background:#f73e3e;
+    border: 0px;
+
+}
+.register-button:hover {
+    background:#b645d9;
+    border: 0px;
+
+}

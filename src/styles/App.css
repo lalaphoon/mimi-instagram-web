@@ -1,0 +1,12 @@
+@import '../../node_modules/antd/dist/antd.css';
+@import 'Topbar.css';
+
+#root {
+  height:100%;
+}
+
+.App {
+  text-align: center;
+  background: linear-gradient(to bottom right,#262838, #262838);
+  height:100%;
+}
