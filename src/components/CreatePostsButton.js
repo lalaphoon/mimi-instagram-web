@@ -1,6 +1,12 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import {Modal, Button, message} from 'antd';
 import { CreatePostForm} from "./CreatePostForm"
+import {
+    POSITION_KEY,
+    TOKEN_KEY,
+    API_ROOT,
+    AUTH_HEADER,
+} from '../constants';
 
 export class CreatePostButton extends React.Component {
     state = {
@@ -19,13 +25,42 @@ export class CreatePostButton extends React.Component {
             confirmLoading: true,
         });
         this.form.validateFieldsAndScroll((errors, values) => {
+
                 if(!errors) {
-                    setTimeout(() => {
-                        this.setState({
-                            visible: false,
-                            confirmLoading: false,
-                        });
-                    }, 2000);
+                    const token = localStorage.getItem(TOKEN_KEY);
+                    const formData = new FormData();
+                    formData.append('lat', 37.0);
+                    formData.append('lon', -120.0);
+                    formData.append('message', values.message);
+                    formData.append('image', values.image[0].originFileObj);
+
+                    fetch(`${API_ROOT}/post`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            Authorization: `${AUTH_HEADER} ${token}`,
+                            'Access-Control-Allow-Headers' : "*",
+                        },
+                        dataType: 'text',
+                    }).then((response) => {
+                        if (response.ok) {
+                            message.success('Create post succeed!');
+                            this.form.resetFields();
+                            this.setState({
+                                visible: false,
+                                confirmLoading: false,
+                            });
+                            if (this.props.onSuccess) {
+                                this.props.onSuccess();
+                            }
+                        } else {
+                            message.error('Create post failed.');
+                            this.setState({
+                                confirmLoading: false,
+                            });
+                        }
+                    });
+
                 } else {
                     this.setState({
                         confirmLoading: false,
