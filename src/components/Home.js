@@ -3,6 +3,7 @@ import '../styles/Home.css';
 import {GEOLOCATION_OPTIONS, POSITION_KEY, TOKEN_KEY, API_ROOT, AUTH_HEADER} from "../constants"
 import { Gallery } from './Gallery';
 import { Tabs, Button, Spin } from 'antd';
+import { CreatePostButton } from './CreatePostsButton';
 const { TabPane } = Tabs;
 
 export class Home extends React.Component {
@@ -116,7 +117,7 @@ export class Home extends React.Component {
     }
 
     render() {
-        const operations = <Button>Create New Post</Button>;
+        const operations = <CreatePostButton />;
         return(
             <Tabs tabBarExtraContent={operations} className={"main-tabs"}>
                 <TabPane tab="Image Posts" key="1">
