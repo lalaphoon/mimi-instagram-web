@@ -21,7 +21,7 @@ class NormalAroundMap extends React.Component {
     }
 
     render() {
-        const position = JSON.parse(localStorage.getItem(POSITION_KEY));
+        const position = {"latitude":37,"longitude":-120};//JSON.parse(localStorage.getItem(POSITION_KEY));
 
         return (
             <GoogleMap defaultZoom={8} defaultCenter={{ lat: position.latitude, lng: position.longitude }}>
