@@ -63,7 +63,7 @@ export class Home extends React.Component {
     }
 
     loadNearbyPost = (
-        position=  {"latitude":37,"longitude":-120}, //JSON.parse(localStorage.getItem(POSITION_KEY)),
+        position=  JSON.parse(localStorage.getItem(POSITION_KEY)),
         range = 20,
     ) =>  {
         this.setState({
@@ -173,7 +173,7 @@ export class Home extends React.Component {
                         containerElement={<div style={{ height: `600px` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
                         posts={this.state.posts}
-
+                        onChange={this.loadNearbyPost}
                     />
                 </TabPane>
             </Tabs>

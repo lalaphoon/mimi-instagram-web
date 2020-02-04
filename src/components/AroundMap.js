@@ -20,11 +20,35 @@ class NormalAroundMap extends React.Component {
         }));
     }
 
+    reloadMarkers = () => {
+        const center = this.map.getCenter();
+        const position = { latitude: center.lat(), longitude: center.lng() };
+
+        const bounds = this.map.getBounds();
+        const northEast = bounds.getNorthEast();
+        const east = new window.google.maps.LatLng(center.lat(), northEast.lng());
+        const range =
+            window.google.maps.geometry.spherical.computeDistanceBetween(center, east)
+            / 1000;
+
+        this.props.onChange(position, range);
+    }
+
+    saveMapRef = (mapInstance) => {
+        this.map = mapInstance;
+        //console.log(this.map);
+        //window.map = mapInstance;
+    }
+
     render() {
-        const position = {"latitude":37,"longitude":-120};//JSON.parse(localStorage.getItem(POSITION_KEY));
+        const position = JSON.parse(localStorage.getItem(POSITION_KEY));
 
         return (
-            <GoogleMap defaultZoom={8} defaultCenter={{ lat: position.latitude, lng: position.longitude }}>
+            <GoogleMap ref={this.saveMapRef}
+                       onDragEnd={this.reloadMarkers}
+                       onZoomChanged={this.reloadMarkers}
+                       defaultZoom={8}
+                       defaultCenter={{ lat: position.latitude, lng: position.longitude }}>
                 {this.props.posts.map((post) => (
                     <AroundMarker
                         post={post}

@@ -25,12 +25,12 @@ export class CreatePostButton extends React.Component {
             confirmLoading: true,
         });
         this.form.validateFieldsAndScroll((errors, values) => {
-
+            const position=  JSON.parse(localStorage.getItem(POSITION_KEY));
                 if(!errors) {
                     const token = localStorage.getItem(TOKEN_KEY);
                     const formData = new FormData();
-                    formData.append('lat', 37.0);
-                    formData.append('lon', -120.0);
+                    formData.append('lat', position.lat);
+                    formData.append('lon', position.longitude);
                     formData.append('message', values.message);
                     formData.append('image', values.image[0].originFileObj);
 
