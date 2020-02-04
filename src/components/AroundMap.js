@@ -3,9 +3,8 @@ import {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
-    Marker,
-    InfoWindow,
 } from "react-google-maps";
+import { AroundMarker } from './AroundMarker';
 
 class NormalAroundMap extends React.Component {
     state = {
@@ -21,19 +20,9 @@ class NormalAroundMap extends React.Component {
     render() {
         return (
             <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
-                <Marker
-                    position={{ lat: -34.397, lng: 150.644 }}
-                    onClick={this.onToggleOpen}>
-                    {(
-                        this.state.isOpen ?
-                            (
-                                <InfoWindow onCloseClick={this.onToggleOpen}>
-                                    <div>InfoWindow</div>
-                                </InfoWindow>
-                            ) :
-                            null
-                    )}
-                </Marker>
+                <AroundMarker position={{ lat: -34.397, lng: 150.644 }} />
+                <AroundMarker position={{ lat: -34.288, lng: 150.733 }} />
+                <AroundMarker position={{ lat: -34.509, lng: 150.555 }} />
             </GoogleMap>
         );
     }
