@@ -5,6 +5,9 @@ import {
     GoogleMap,
 } from "react-google-maps";
 import { AroundMarker } from './AroundMarker';
+import {
+    POSITION_KEY,
+} from '../constants';
 
 class NormalAroundMap extends React.Component {
     state = {
@@ -18,11 +21,16 @@ class NormalAroundMap extends React.Component {
     }
 
     render() {
+        const position = JSON.parse(localStorage.getItem(POSITION_KEY));
+
         return (
-            <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
-                <AroundMarker position={{ lat: -34.397, lng: 150.644 }} />
-                <AroundMarker position={{ lat: -34.288, lng: 150.733 }} />
-                <AroundMarker position={{ lat: -34.509, lng: 150.555 }} />
+            <GoogleMap defaultZoom={8} defaultCenter={{ lat: position.latitude, lng: position.longitude }}>
+                {this.props.posts.map((post) => (
+                    <AroundMarker
+                        post={post}
+                        key={post.url}
+                    />
+                ))}
             </GoogleMap>
         );
     }

@@ -18,6 +18,7 @@ const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
 
+
 class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
