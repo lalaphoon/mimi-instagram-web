@@ -4,6 +4,8 @@ export const POSITION_KEY = 'POSITION';
 export const AUTH_HEADER = 'Bearer';
 export const POST_TYPE_IMAGE = 'image';
 export const POST_TYPE_VIDEO = 'video';
+export const TOPIC_AROUND = 'around';
+export const TOPIC_FACE = 'face';
 export const GEOLOCATION_OPTIONS = {
   enableHighAccuracy: true,
   maximumAge: 3600000,

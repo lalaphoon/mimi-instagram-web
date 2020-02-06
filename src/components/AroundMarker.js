@@ -69,6 +69,8 @@ export class AroundMarker extends React.Component {
                     )}
                 </Marker>
             );
+        } else {
+            return null;
         }
     }
 }
