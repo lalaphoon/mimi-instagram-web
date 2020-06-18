@@ -6,7 +6,7 @@ export function Topbar(props) {
     return (
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
-                <h1 className="App-title">Neighbourhood</h1>
+                <h1 className="App-title">Mimi-Instagram</h1>
                 {
                     props.isLoggedIn ?
                         <a onClick={props.handleLogout} className="logout">
